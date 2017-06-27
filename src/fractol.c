@@ -19,7 +19,10 @@ void				refresh(t_stuff *stuff)
 	stuff->img.img_ptr = mlx_new_image(stuff->img.mlx_ptr, WIDTH, LENGTH);
 	stuff->img.data = mlx_get_data_addr(stuff->img.img_ptr, \
 		&stuff->img.bits_per_pixel, &stuff->img.size_line, &stuff->img.endian);
-	julia(stuff);
+	if (stuff->type == 1)
+		mandelbrot(stuff);
+	else if (stuff->type == 2)
+		julia(stuff);
 	mlx_put_image_to_window(stuff->img.mlx_ptr, stuff->img.win_ptr, \
 		stuff->img.img_ptr, 0, 0);
 }
@@ -37,8 +40,8 @@ void			julia(t_stuff *stuff)
 		{
 			stuff->frc.c_r = 0.285;
 			stuff->frc.c_i = 0.01;
-			stuff->frc.z_r = stuff->frc.x / stuff->frc.ZOOMX + stuff->frc.x1;
-			stuff->frc.z_i = stuff->frc.y / stuff->frc.ZOOMY + stuff->frc.y1;
+			stuff->frc.z_r = stuff->frc.x / stuff->frc.zoom + stuff->frc.x1;
+			stuff->frc.z_i = stuff->frc.y / stuff->frc.zoom + stuff->frc.y1;
 			stuff->frc.i = -1;
 			while (stuff->frc.z_r * stuff->frc.z_r + stuff->frc.z_i * stuff->frc.z_i < 4 && ++stuff->frc.i < stuff->frc.MAX_IT)
 			{
@@ -65,8 +68,8 @@ void			mandelbrot(t_stuff *stuff)
 		stuff->frc.x = -1;
 		while (++stuff->frc.x < WIDTH)
 		{
-			stuff->frc.c_r = stuff->frc.x / stuff->frc.ZOOMX + stuff->frc.x1;
-			stuff->frc.c_i = stuff->frc.y / stuff->frc.ZOOMY + stuff->frc.y1;
+			stuff->frc.c_r = stuff->frc.x / stuff->frc.zoom + stuff->frc.x1;
+			stuff->frc.c_i = stuff->frc.y / stuff->frc.zoom + stuff->frc.y1;
 			stuff->frc.z_r = 0;
 			stuff->frc.z_i = 0;
 			stuff->frc.i = -1;
@@ -107,8 +110,18 @@ int				main(int ac, char **av)
 	stuff.img.mlx_ptr = mlx_init();
 	stuff.img.win_ptr = mlx_new_window(stuff.img.mlx_ptr, WIDTH, LENGTH,\
 			"FRACTOL");
-	init_struct(&stuff);
-	julia(&stuff);
+	if (av[1][0] == 49)
+	{
+		init_struct(&stuff, 1);
+		mandelbrot(&stuff);
+	}
+	else if (av[1][0] == 50)
+	{
+		init_struct(&stuff, 2);
+		julia(&stuff);
+	}
+	else
+		ft_usage();
 	mlx_put_image_to_window(stuff.img.mlx_ptr, stuff.img.win_ptr, \
 		stuff.img.img_ptr, 0, 0);
 	mlx_hook(stuff.img.win_ptr, 2, (1l << 0), hooks, &stuff);

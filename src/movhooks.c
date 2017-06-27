@@ -25,13 +25,13 @@ void		hormovement(int keycode, t_stuff *stuff)
 {
 	if (keycode == 123)
 	{
-		stuff->frc.x1 += 0.01;
-		stuff->frc.x2 += 0.01;
+		stuff->frc.x1 -= 0.05;
+		stuff->frc.x2 -= 0.05;
 	}
 	if (keycode == 124)
 	{
-		stuff->frc.x1 -= 0.01;
-		stuff->frc.x2 -= 0.01;
+		stuff->frc.x1 += 0.05;
+		stuff->frc.x2 += 0.05;
 	}
 }
 
@@ -39,13 +39,13 @@ void		vermovement(int keycode, t_stuff *stuff)
 {
 	if (keycode == 126)
 	{
-		stuff->frc.y1 += 0.01;
-		stuff->frc.y2 += 0.01;
+		stuff->frc.y1 -= 0.05;
+		stuff->frc.y2 -= 0.05;
 	}
 	if (keycode == 125)
 	{
-		stuff->frc.y1 -= 0.01;
-		stuff->frc.y2 -= 0.01;
+		stuff->frc.y1 += 0.05;
+		stuff->frc.y2 += 0.05;
 	}
 }
 
@@ -61,4 +61,8 @@ void		itehook(int keycode, t_stuff *stuff)
 		if (!(stuff->frc.MAX_IT - 1 < 0))
 			stuff->frc.MAX_IT -= 1;
 	}
+	if (keycode == 69)
+		stuff->frc.zoom += stuff->frc.zoom/10;
+	if (keycode == 78)
+		stuff->frc.zoom -= stuff->frc.zoom/10;
 }

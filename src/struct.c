@@ -12,16 +12,28 @@
 
 #include "../includes/fractol.h"
 
-void	init_struct(t_stuff *stuff)
+void	init_struct(t_stuff *stuff, int option)
 {
-	stuff->frc.x1 = -1;
-	stuff->frc.x2 = 1;
+	if (option == 1)
+	{
+		stuff->type = 1;
+		stuff->frc.x1 = -2.1;
+		stuff->frc.x2 = 0.6;
+		stuff->frc.zoom = 282;
+	}
+	else if (option == 2)
+	{
+		stuff->type = 2;
+		stuff->frc.x1 = -1.2;
+		stuff->frc.x2 = 1;
+		stuff->frc.zoom = 341;
+	}
 	stuff->frc.y1 = -1.2;
 	stuff->frc.y2 = 1.2;
 	stuff->frc.MAX_IT = 50;
 	color1(stuff);
-	stuff->frc.ZOOMX = LENGTH/(stuff->frc.x2 - stuff->frc.x1);
-	stuff->frc.ZOOMY = WIDTH/(stuff->frc.y2 - stuff->frc.y1);
+	stuff->frc.ZOOMX = LENGTH / (stuff->frc.x2 - stuff->frc.x1);
+	stuff->frc.ZOOMY = WIDTH / (stuff->frc.y2 - stuff->frc.y1);
 	stuff->img.img_ptr = mlx_new_image(stuff->img.mlx_ptr, WIDTH, LENGTH);
 	if (!(stuff->img.data = (char *)ft_strnew(sizeof(char)\
 		* WIDTH * LENGTH * 4)))

@@ -13,8 +13,8 @@
 #ifndef FRACTOL_H
 
 # define FRACTOL_H
-# define WIDTH 1000
-# define LENGTH 1000
+# define WIDTH 800
+# define LENGTH 800
 # include <unistd.h>
 # include <stdlib.h>
 # include <mlx.h>
@@ -33,6 +33,7 @@ typedef struct	s_frc
 	double x2;
 	double y1;
 	double y2;
+	double zoom;
 	double ZOOMX;
 	double ZOOMY;
 	double MAX_IT;
@@ -56,12 +57,13 @@ typedef	struct	s_stuff
 {
 	t_img		img;
 	t_frc		frc;
+	int			type;
 }				t_stuff;
 
 void			mlx_pixel_put_to_image(t_img img, int x, int y, int color);
 void			ft_exit(int code);
 static void		ft_usage(void);
-void			init_struct(t_stuff *stuff);
+void			init_struct(t_stuff *stuff, int option);
 void				julia(t_stuff *stuff);
 int				draw(t_stuff *stuff);
 void			mandelbrot(t_stuff *stuff);
