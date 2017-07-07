@@ -12,7 +12,8 @@
 
 SRC_PATH = src/
 
-SRC_NAME = 	fractol.c img.c struct.c colors.c movhooks.c hooks.c
+SRC_NAME = 	fractol.c img.c struct.c colors.c movhooks.c hooks.c julia.c \
+			mandelbrot.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 
@@ -24,7 +25,7 @@ CC = clang
 
 CCFLAGS = -Ofast -Wall -Wextra -Werror
 
-FDFFLAGS = -lmlx -framework OpenGL -framework Appkit
+FDFFLAGS = -lmlx -framework OpenGL -framework Appkit -lpthread -D_REENTRANT
 
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
 

@@ -13,80 +13,6 @@
 #include "../includes/fractol.h"
 #include <stdio.h>
 
-void				refresh(t_stuff *stuff)
-{
-	mlx_destroy_image(stuff->img.mlx_ptr, stuff->img.img_ptr);
-	stuff->img.img_ptr = mlx_new_image(stuff->img.mlx_ptr, WIDTH, LENGTH);
-	stuff->img.data = mlx_get_data_addr(stuff->img.img_ptr, \
-		&stuff->img.bits_per_pixel, &stuff->img.size_line, &stuff->img.endian);
-	if (stuff->type == 1)
-		mandelbrot(stuff);
-	else if (stuff->type == 2)
-		julia(stuff);
-	mlx_put_image_to_window(stuff->img.mlx_ptr, stuff->img.win_ptr, \
-		stuff->img.img_ptr, 0, 0);
-}
-
-void			julia(t_stuff *stuff)
-{
-	double tmp;
-
-	stuff->frc.y = -1;
-
-	while (++stuff->frc.y < LENGTH)
-	{
-		stuff->frc.x = -1;
-		while (++stuff->frc.x < WIDTH)
-		{
-			stuff->frc.c_r = 0.285;
-			stuff->frc.c_i = 0.01;
-			stuff->frc.z_r = stuff->frc.x / stuff->frc.zoom + stuff->frc.x1;
-			stuff->frc.z_i = stuff->frc.y / stuff->frc.zoom + stuff->frc.y1;
-			stuff->frc.i = -1;
-			while (stuff->frc.z_r * stuff->frc.z_r + stuff->frc.z_i * stuff->frc.z_i < 4 && ++stuff->frc.i < stuff->frc.MAX_IT)
-			{
-				tmp = stuff->frc.z_r;
-				stuff->frc.z_r = ((stuff->frc.z_r * stuff->frc.z_r) - (stuff->frc.z_i * stuff->frc.z_i)) + stuff->frc.c_r;
-				stuff->frc.z_i = 2 * stuff->frc.z_i * tmp + stuff->frc.c_i;
-			}
-			if (stuff->frc.i == stuff->frc.MAX_IT)
-				mlx_pixel_put_to_image(stuff->img, stuff->frc.x, stuff->frc.y, 0x000000);
-			else
-				mlx_pixel_put_to_image(stuff->img, stuff->frc.x, stuff->frc.y, stuff->img.color[stuff->frc.i]);
-		}
-	}
-}
-
-void			mandelbrot(t_stuff *stuff)
-{
-	double tmp;
-
-	stuff->frc.y = -1;
-
-	while (++stuff->frc.y < LENGTH)
-	{
-		stuff->frc.x = -1;
-		while (++stuff->frc.x < WIDTH)
-		{
-			stuff->frc.c_r = stuff->frc.x / stuff->frc.zoom + stuff->frc.x1;
-			stuff->frc.c_i = stuff->frc.y / stuff->frc.zoom + stuff->frc.y1;
-			stuff->frc.z_r = 0;
-			stuff->frc.z_i = 0;
-			stuff->frc.i = -1;
-			while (stuff->frc.z_r * stuff->frc.z_r + stuff->frc.z_i * stuff->frc.z_i < 4 && ++stuff->frc.i < stuff->frc.MAX_IT)
-			{
-				tmp = stuff->frc.z_r;
-				stuff->frc.z_r = ((stuff->frc.z_r * stuff->frc.z_r) - (stuff->frc.z_i * stuff->frc.z_i)) + stuff->frc.c_r;
-				stuff->frc.z_i = 2 * stuff->frc.z_i * tmp + stuff->frc.c_i;
-			}
-			if (stuff->frc.i == stuff->frc.MAX_IT)
-				mlx_pixel_put_to_image(stuff->img, stuff->frc.x, stuff->frc.y, 0x000000);
-			else
-				mlx_pixel_put_to_image(stuff->img, stuff->frc.x, stuff->frc.y, stuff->img.color[stuff->frc.i]);
-		}
-	}
-}
-
 void			ft_exit(int code)
 {
 	ft_putstr("Error happened: ");
@@ -112,19 +38,20 @@ int				main(int ac, char **av)
 			"FRACTOL");
 	if (av[1][0] == 49)
 	{
-		init_struct(&stuff, 1);
+		stuff.type = 1;
+		init_struct(&stuff);
 		mandelbrot(&stuff);
 	}
 	else if (av[1][0] == 50)
 	{
-		init_struct(&stuff, 2);
+		stuff.type = 2;
+		init_struct(&stuff);
 		julia(&stuff);
 	}
 	else
 		ft_usage();
-	mlx_put_image_to_window(stuff.img.mlx_ptr, stuff.img.win_ptr, \
-		stuff.img.img_ptr, 0, 0);
 	mlx_hook(stuff.img.win_ptr, 2, (1l << 0), hooks, &stuff);
+	mlx_hook(stuff.img.win_ptr, 6, (1l << 6), mouse_hook, &stuff);
 	mlx_loop(stuff.img.mlx_ptr);
 	return (0);
 }
