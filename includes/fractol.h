@@ -22,7 +22,7 @@
 # include <pthread.h>
 # include <../libft/libft.h>
 
-# define MT 8
+# define MT 16
 
 typedef struct	s_frc
 {
@@ -39,9 +39,6 @@ typedef struct	s_frc
 	double x2;
 	double y1;
 	double y2;
-	double zoom;
-	double ZOOMX;
-	double ZOOMY;
 	double MAX_IT;
 
 }				t_frc;
@@ -56,7 +53,6 @@ typedef struct s_frac
 	double x2;
 	double y1;
 	double y2;
-	double zoom;
 	int i;
 	double x;
 	double y;
@@ -114,4 +110,5 @@ void			hormovement(int keycode, t_stuff *stuff);
 void			vermovement(int keycode, t_stuff *stuff);
 void		itehook(int keycode, t_stuff *stuff);
 int		mouse_hook(int x, int y, t_stuff *stuff);
+int		zoom(int button, int x, int y, t_stuff *stuff);
 #endif

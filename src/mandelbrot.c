@@ -43,10 +43,10 @@ void			*draw_mandelbrot(t_tmp *tmp)
 	while (++frac.x < frac.end)
 	{
 		frac.y = -1;
-		while (++frac.y < WIDTH)
+		while (++frac.y < LENGTH)
 		{
-			frac.c_r = frac.x / frac.zoom + frac.x1;
-			frac.c_i = frac.y / frac.zoom + frac.y1;
+			frac.c_r = (frac.x / WIDTH) * (frac.x2 - frac.x1) + frac.x1;
+			frac.c_i = (frac.y / LENGTH) * (frac.y2 - frac.y1) + frac.y1;
 			frac.z_r = 0;
 			frac.z_i = 0;
 			frac.i = -1;
@@ -69,7 +69,6 @@ void			set_mandelbrot(t_tmp *tmp, t_frac *frac)
 {
 	frac->x = tmp->start - 1;
 	frac->end = tmp->end;
-	frac->zoom = tmp->stuff->frc.zoom;
 	frac->x1 = tmp->stuff->frc.x1;
 	frac->x2 = tmp->stuff->frc.x2;
 	frac->y1 = tmp->stuff->frc.y1;

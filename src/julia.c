@@ -32,6 +32,12 @@ void			julia(t_stuff *stuff)
 	mlx_put_image_to_window(stuff->img.mlx_ptr, stuff->img.win_ptr, \
 		stuff->img.img_ptr, 0, 0);
 }
+//
+// px: 200
+// py: 100
+//
+// posFracX = (float)(px / WIDTH) * (x2 - x1)
+// posFracY = (float)(py / HEIGHT) * (y2 - y1)
 
 void			*draw_julia(t_tmp *tmp)
 {
@@ -47,8 +53,8 @@ void			*draw_julia(t_tmp *tmp)
 		{
 			frac.c_r = stuff->frc.c_r;
 			frac.c_i = stuff->frc.c_i;
-			frac.z_r = frac.x / frac.zoom + frac.x1;
-			frac.z_i = frac.y / frac.zoom + frac.y1;
+			frac.z_r = (frac.x / WIDTH) * (frac.x2 - frac.x1) + frac.x1;
+			frac.z_i = (frac.y / LENGTH) * (frac.y2 - frac.y1) + frac.y1;
 			frac.i = -1;
 			while (frac.z_r * frac.z_r + frac.z_i * frac.z_i < 4 && ++frac.i < stuff->frc.MAX_IT)
 			{
@@ -70,7 +76,6 @@ void			set_julia(t_tmp *tmp, t_frac *frac)
 {
 	frac->x = tmp->start - 1;
 	frac->end = tmp->end;
-	frac->zoom = tmp->stuff->frc.zoom;
 	frac->x1 = tmp->stuff->frc.x1;
 	frac->x2 = tmp->stuff->frc.x2;
 	frac->y1 = tmp->stuff->frc.y1;
