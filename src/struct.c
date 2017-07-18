@@ -16,22 +16,22 @@ void	init_struct(t_stuff *stuff)
 {
 	if (stuff->type == 1)
 	{
-		stuff->frc.x1 = -1.3;
-		stuff->frc.x2 = 1.3;
+		stuff->frc.x1 = -1.2;
+		stuff->frc.x2 = 1.2;
 	}
 	else if (stuff->type == 2)
 	{
 		stuff->frc.c_r = 0.285;
 		stuff->frc.c_i = 0.01;
-		stuff->frc.x1 = -1.2;
-		stuff->frc.x2 = 1.2;
+		stuff->frc.x1 = 0;
+		stuff->frc.x2 = 2.4;
 	}
 	if (!(stuff->th = (pthread_t *)malloc(sizeof(pthread_t) * MT)))
 		exit(0);
 	stuff->frc.start = WIDTH/MT;
 	stuff->exit = 1;
-	stuff->frc.y1 = -1.3;
-	stuff->frc.y2 = 1.3;
+	stuff->frc.y1 = -1.2;
+	stuff->frc.y2 = 1.2;
 	stuff->frc.MAX_IT = it;
 	color1(&stuff->img);
 	stuff->img.img_ptr = mlx_new_image(stuff->img.mlx_ptr, WIDTH, LENGTH);

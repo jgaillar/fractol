@@ -50,9 +50,9 @@ int				main(int ac, char **av)
 	}
 	else
 		ft_usage();
-	mlx_hook(stuff.img.win_ptr, 2, (1l << 0), hooks, &stuff);
-	mlx_hook(stuff.img.win_ptr, 6, (1l << 6), mouse_hook, &stuff);
-	mlx_hook(stuff.img.win_ptr, 5, (1l << 1), zoom, &stuff);
+	mlx_hook(stuff.img.win_ptr, 2, (1L << 0), hooks, &stuff);
+	mlx_hook(stuff.img.win_ptr, 6, (1L << 6), mouse_hook, &stuff);
+	mlx_hook(stuff.img.win_ptr, 4, (1L << 2), zoom, &stuff);
 	mlx_loop(stuff.img.mlx_ptr);
 	return (0);
 }

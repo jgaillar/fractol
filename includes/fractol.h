@@ -111,4 +111,6 @@ void			vermovement(int keycode, t_stuff *stuff);
 void		itehook(int keycode, t_stuff *stuff);
 int		mouse_hook(int x, int y, t_stuff *stuff);
 int		zoom(int button, int x, int y, t_stuff *stuff);
+void		checkx(t_stuff *stuff, int x);
+void	checky(t_stuff *stuff, int y);
 #endif
