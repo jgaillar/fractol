@@ -21,19 +21,23 @@ void		echap(int keycode, t_stuff *stuff)
 	}
 	if (keycode == 15)
 		init_struct(stuff);
+	if (keycode == 37)
+		stuff->frc.lock = 0;
+	if (keycode == 32)
+		stuff->frc.lock = 1;
 }
 
 void		hormovement(int keycode, t_stuff *stuff)
 {
 	if (keycode == 123)
 	{
-		stuff->frc.x1 -= 0.05;
-		stuff->frc.x2 -= 0.05;
+		stuff->frc.x1 -= 0.03 * stuff->frc.zoom;
+		stuff->frc.x2 -= 0.03 * stuff->frc.zoom;
 	}
 	if (keycode == 124)
 	{
-		stuff->frc.x1 += 0.05;
-		stuff->frc.x2 += 0.05;
+		stuff->frc.x1 += 0.03 * stuff->frc.zoom;
+		stuff->frc.x2 += 0.03 * stuff->frc.zoom;
 	}
 }
 
@@ -41,13 +45,13 @@ void		vermovement(int keycode, t_stuff *stuff)
 {
 	if (keycode == 126)
 	{
-		stuff->frc.y1 -= 0.05;
-		stuff->frc.y2 -= 0.05;
+		stuff->frc.y1 -= 0.03 * stuff->frc.zoom;
+		stuff->frc.y2 -= 0.03 * stuff->frc.zoom;
 	}
 	if (keycode == 125)
 	{
-		stuff->frc.y1 += 0.05;
-		stuff->frc.y2 += 0.05;
+		stuff->frc.y1 += 0.03 * stuff->frc.zoom;
+		stuff->frc.y2 += 0.03 * stuff->frc.zoom;
 	}
 }
 

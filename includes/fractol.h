@@ -27,6 +27,7 @@
 typedef struct	s_frc
 {
 	int		i;
+	int		lock;
 	double x;
 	double y;
 	double start;
@@ -40,6 +41,7 @@ typedef struct	s_frc
 	double y1;
 	double y2;
 	double MAX_IT;
+	double zoom;
 
 }				t_frc;
 
@@ -111,6 +113,6 @@ void			vermovement(int keycode, t_stuff *stuff);
 void		itehook(int keycode, t_stuff *stuff);
 int		mouse_hook(int x, int y, t_stuff *stuff);
 int		zoom(int button, int x, int y, t_stuff *stuff);
-void		checkx(t_stuff *stuff, int x);
+void		checkx(t_stuff *stuff, int x, int y);
 void	checky(t_stuff *stuff, int y);
 #endif
