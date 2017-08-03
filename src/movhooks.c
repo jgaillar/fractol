@@ -6,18 +6,34 @@
 /*   By: jgaillar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 02:18:46 by jgaillar          #+#    #+#             */
-/*   Updated: 2017/06/24 02:48:10 by jgaillar         ###   ########.fr       */
+/*   Updated: 2017/08/03 13:50:38 by jgaillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fractol.h"
+#include <stdio.h>
 
-void		echap(int keycode, t_stuff *stuff)
+int		hooks(int keycode, t_stuff *stuff)
+{
+	echap(keycode, stuff);
+	hormovement(keycode, stuff);
+	vermovement(keycode, stuff);
+	itehook(keycode, stuff);
+	if (stuff->type == 1)
+		mandelbrot(stuff);
+	else if (stuff->type == 2)
+		julia(stuff);
+	else if (stuff->type == 3)
+		burningship(stuff);
+	return (0);
+}
+
+void	echap(int keycode, t_stuff *stuff)
 {
 	if (keycode == 53)
 	{
 		stuff->exit = 2;
-		exit (0);
+		exit(0);
 	}
 	if (keycode == 15)
 		init_struct(stuff);
@@ -27,35 +43,35 @@ void		echap(int keycode, t_stuff *stuff)
 		stuff->frc.lock = 1;
 }
 
-void		hormovement(int keycode, t_stuff *stuff)
+void	hormovement(int keycode, t_stuff *stuff)
 {
 	if (keycode == 123)
 	{
-		stuff->frc.x1 -= 0.03 * stuff->frc.zoom;
-		stuff->frc.x2 -= 0.03 * stuff->frc.zoom;
+		stuff->frc.x1 -= 0.01 * stuff->frc.zoom;
+		stuff->frc.x2 -= 0.01 * stuff->frc.zoom;
 	}
 	if (keycode == 124)
 	{
-		stuff->frc.x1 += 0.03 * stuff->frc.zoom;
-		stuff->frc.x2 += 0.03 * stuff->frc.zoom;
+		stuff->frc.x1 += 0.01 * stuff->frc.zoom;
+		stuff->frc.x2 += 0.01 * stuff->frc.zoom;
 	}
 }
 
-void		vermovement(int keycode, t_stuff *stuff)
+void	vermovement(int keycode, t_stuff *stuff)
 {
 	if (keycode == 126)
 	{
-		stuff->frc.y1 -= 0.03 * stuff->frc.zoom;
-		stuff->frc.y2 -= 0.03 * stuff->frc.zoom;
+		stuff->frc.y1 -= 0.01 * stuff->frc.zoom;
+		stuff->frc.y2 -= 0.01 * stuff->frc.zoom;
 	}
 	if (keycode == 125)
 	{
-		stuff->frc.y1 += 0.03 * stuff->frc.zoom;
-		stuff->frc.y2 += 0.03 * stuff->frc.zoom;
+		stuff->frc.y1 += 0.01 * stuff->frc.zoom;
+		stuff->frc.y2 += 0.01 * stuff->frc.zoom;
 	}
 }
 
-void		itehook(int keycode, t_stuff *stuff)
+void	itehook(int keycode, t_stuff *stuff)
 {
 	if (keycode == 24)
 	{

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mandelbrot.c                                       :+:      :+:    :+:   */
+/*   burningship.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jgaillar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/07 00:59:31 by jgaillar          #+#    #+#             */
-/*   Updated: 2017/07/07 00:59:35 by jgaillar         ###   ########.fr       */
+/*   Created: 2017/08/03 11:23:18 by jgaillar          #+#    #+#             */
+/*   Updated: 2017/08/03 11:23:19 by jgaillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void			mandelbrot(t_stuff *stuff)
+void			burningship(t_stuff *stuff)
 {
 	t_tmp *tmp;
 
@@ -24,7 +24,7 @@ void			mandelbrot(t_stuff *stuff)
 		tmp->end = tmp->start + WIDTH / MT;
 		tmp->stuff = stuff;
 		pthread_create(&stuff->th[stuff->i], NULL, \
-			(void *(*)(void *))(&draw_mandelbrot), (void*)(tmp));
+			(void *(*)(void *))(&draw_burningship), (void*)(tmp));
 	}
 	stuff->j = -1;
 	while (++stuff->j < MT)
@@ -33,7 +33,7 @@ void			mandelbrot(t_stuff *stuff)
 		stuff->img.img_ptr, 0, 0);
 }
 
-void			*draw_mandelbrot(t_tmp *tmp)
+void			*draw_burningship(t_tmp *tmp)
 {
 	double	temp;
 	t_frac	frac;
@@ -51,13 +51,13 @@ void			*draw_mandelbrot(t_tmp *tmp)
 			frac.z_r = 0;
 			frac.z_i = 0;
 			frac.i = -1;
-			while (frac.z_r * frac.z_r + frac.z_i * frac.z_i < 4 && ++frac.i \
-				< stuff->frc.MAX_IT)
+			while (frac.z_r * frac.z_r + frac.z_i * frac.z_i < 4 && \
+				++frac.i < stuff->frc.MAX_IT)
 			{
 				temp = frac.z_r;
 				frac.z_r = ((frac.z_r * frac.z_r) - (frac.z_i * frac.z_i)) \
 				+ frac.c_r;
-				frac.z_i = 2 * frac.z_i * temp + frac.c_i;
+				frac.z_i = 2 * fabs(frac.z_i * temp) + frac.c_i;
 			}
 			if (frac.i == stuff->frc.MAX_IT)
 				mlx_pixel_put_to_image(stuff->img, frac.x, frac.y, 0x000000);
@@ -68,14 +68,4 @@ void			*draw_mandelbrot(t_tmp *tmp)
 	}
 	free(tmp);
 	return (NULL);
-}
-
-void			set_data(t_tmp *tmp, t_frac *frac)
-{
-	frac->x = tmp->start - 1;
-	frac->end = tmp->end;
-	frac->x1 = tmp->stuff->frc.x1;
-	frac->x2 = tmp->stuff->frc.x2;
-	frac->y1 = tmp->stuff->frc.y1;
-	frac->y2 = tmp->stuff->frc.y2;
 }

@@ -48,6 +48,12 @@ int				main(int ac, char **av)
 		init_struct(&stuff);
 		julia(&stuff);
 	}
+	else if (av[1][0] == 51)
+	{
+		stuff.type = 3;
+		init_struct(&stuff);
+		burningship(&stuff);
+	}
 	else
 		ft_usage();
 	mlx_hook(stuff.img.win_ptr, 2, (1L << 0), hooks, &stuff);

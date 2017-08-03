@@ -14,10 +14,10 @@
 
 void	init_struct(t_stuff *stuff)
 {
-	if (stuff->type == 1)
+	if (stuff->type == 1 || stuff->type == 3)
 	{
-		stuff->frc.x1 = -1.2;
-		stuff->frc.x2 = 1.2;
+		stuff->frc.x1 = -1.9;
+		stuff->frc.x2 = 0.5;
 	}
 	else if (stuff->type == 2)
 	{
@@ -28,7 +28,7 @@ void	init_struct(t_stuff *stuff)
 	}
 	if (!(stuff->th = (pthread_t *)malloc(sizeof(pthread_t) * MT)))
 		exit(0);
-	stuff->frc.start = WIDTH/MT;
+	stuff->frc.start = WIDTH / MT;
 	stuff->exit = 1;
 	stuff->frc.lock = 1;
 	stuff->frc.zoom = 0.1;
@@ -43,6 +43,3 @@ void	init_struct(t_stuff *stuff)
 	stuff->img.data = mlx_get_data_addr(stuff->img.img_ptr,\
 		&stuff->img.bits_per_pixel, &stuff->img.size_line, &stuff->img.endian);
 }
-
-// pour julia : modifier c_r et c_i avec le x et y de la souris en faisant en sorte qu'il soit entre -1 et 1
-// pour le zoom faire en sorte que le centre de l'ecran soit le x et y que donne la souris

@@ -13,7 +13,7 @@
 SRC_PATH = src/
 
 SRC_NAME = 	fractol.c img.c struct.c colors.c movhooks.c hooks.c julia.c \
-			mandelbrot.c
+			mandelbrot.c burningship.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 

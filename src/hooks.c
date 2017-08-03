@@ -10,21 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fractol.h"
-#include <stdio.h>
-
-int		hooks(int keycode, t_stuff *stuff)
-{
-	echap(keycode, stuff);
-	hormovement(keycode, stuff);
-	vermovement(keycode, stuff);
-	itehook(keycode, stuff);
-	if (stuff->type == 1)
-		mandelbrot(stuff);
-	else if (stuff->type == 2)
-		julia(stuff);
-	return (0);
-}
+#include "fractol.h"
 
 int		mouse_hook(int x, int y, t_stuff *stuff)
 {
@@ -40,30 +26,43 @@ int		mouse_hook(int x, int y, t_stuff *stuff)
 
 int		zoom(int button, int x, int y, t_stuff *stuff)
 {
+	if (button == 4)
+		plus(stuff, x, y);
 	if (button == 5)
-		checkx(stuff, x, y);
+		minus(stuff, x, y);
 	if (stuff->type == 1)
 		mandelbrot(stuff);
 	else if (stuff->type == 2)
 		julia(stuff);
-
+	else if (stuff->type == 3)
+		burningship(stuff);
 	return (0);
 }
 
-void		checkx(t_stuff *stuff, int x, int y)
+void	plus(t_stuff *stuff, int x, int y)
 {
-	if (stuff->frc.x1 + (((double)x - ((double)x/ WIDTH * \
-	(WIDTH * stuff->frc.zoom))) / 10000) < 0 && stuff->frc.x2 - (((WIDTH - x) - \
-	(WIDTH - x) / WIDTH * (WIDTH * stuff->frc.zoom)) / 10000) > 0 && \
-stuff->frc.y1 + (((double)y - ((double)y/ LENGTH * (LENGTH * stuff->frc.zoom))) \
-/ 10000) < 0 && stuff->frc.y2 - (((LENGTH - y) - (LENGTH - y) / \
-LENGTH * (LENGTH * stuff->frc.zoom)) / 10000) > 0)
-{
-	stuff->frc.x1 += ((double)x - ((double)x/ WIDTH * (WIDTH * stuff->frc.zoom))) / 10000;
-	stuff->frc.x2 -= (((double)WIDTH - x) - ((double)WIDTH - x) / WIDTH * (WIDTH * stuff->frc.zoom)) / 10000;
-	stuff->frc.y1 += ((double)y - ((double)y/ LENGTH * (LENGTH * stuff->frc.zoom))) / 10000;
-	stuff->frc.y2 -= (((double)LENGTH - y) - ((double)LENGTH - y) / LENGTH * (LENGTH * stuff->frc.zoom)) / 10000;
-	if (stuff->frc.zoom + 0.015 < 1)
-		stuff->frc.zoom += 0.015;
+	stuff->frc.x1 += ((double)x - ((double)x / WIDTH * \
+	(WIDTH * stuff->frc.zoom))) / 10000;
+	stuff->frc.x2 -= (((double)WIDTH - x) - ((double)WIDTH - x) / WIDTH * \
+	(WIDTH * stuff->frc.zoom)) / 10000;
+	stuff->frc.y1 += ((double)y - ((double)y / LENGTH * \
+	(LENGTH * stuff->frc.zoom))) / 10000;
+	stuff->frc.y2 -= (((double)LENGTH - y) - ((double)LENGTH - y) / \
+	LENGTH * (LENGTH * stuff->frc.zoom)) / 10000;
+	if (stuff->frc.zoom + 0.01385 <= 1)
+		stuff->frc.zoom += 0.01385;
 }
+
+void	minus(t_stuff *stuff, int x, int y)
+{
+	stuff->frc.x1 -= ((double)x - ((double)x / WIDTH * \
+	(WIDTH * stuff->frc.zoom))) / 10000;
+	stuff->frc.x2 += (((double)WIDTH - x) - ((double)WIDTH - x) / \
+	WIDTH * (WIDTH * stuff->frc.zoom)) / 10000;
+	stuff->frc.y1 -= ((double)y - ((double)y / LENGTH * \
+	(LENGTH * stuff->frc.zoom))) / 10000;
+	stuff->frc.y2 += (((double)LENGTH - y) - \
+	((double)LENGTH - y) / LENGTH * (LENGTH * stuff->frc.zoom)) / 10000;
+	if (stuff->frc.zoom - 0.0138 >= 0)
+		stuff->frc.zoom -= 0.0138;
 }

@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <mlx.h>
 # include <pthread.h>
+# include <math.h>
 # include <../libft/libft.h>
 
 # define MT 16
@@ -100,11 +101,12 @@ int				refresh(t_stuff *stuff);
 void			init_struct(t_stuff *stuff);
 void			julia(t_stuff *stuff);
 void			*draw_julia(t_tmp *tmp);
-void			set_julia(t_tmp *tmp, t_frac *frac);
 int				draw(t_stuff *stuff);
 void			mandelbrot(t_stuff *stuff);
+void			burningship(t_stuff *stuff);
 void			*draw_mandelbrot(t_tmp *tmp);
-void			set_mandelbrot(t_tmp *tmp, t_frac *frac);
+void			*draw_burningship(t_tmp *tmp);
+void			set_data(t_tmp *tmp, t_frac *frac);
 void			color1(t_img *img);
 int				hooks(int keycode, t_stuff *stuff);
 void			echap(int keycode, t_stuff *stuff);
@@ -113,6 +115,6 @@ void			vermovement(int keycode, t_stuff *stuff);
 void		itehook(int keycode, t_stuff *stuff);
 int		mouse_hook(int x, int y, t_stuff *stuff);
 int		zoom(int button, int x, int y, t_stuff *stuff);
-void		checkx(t_stuff *stuff, int x, int y);
-void	checky(t_stuff *stuff, int y);
+void		plus(t_stuff *stuff, int x, int y);
+void	minus(t_stuff *stuff, int x, int y);
 #endif
