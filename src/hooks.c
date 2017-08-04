@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "fractol.h"
+#include <stdio.h>
 
 int		mouse_hook(int x, int y, t_stuff *stuff)
 {
@@ -26,9 +27,9 @@ int		mouse_hook(int x, int y, t_stuff *stuff)
 
 int		zoom(int button, int x, int y, t_stuff *stuff)
 {
-	if (button == 4)
-		plus(stuff, x, y);
 	if (button == 5)
+		plus(stuff, x, y);
+	if (button == 4)
 		minus(stuff, x, y);
 	if (stuff->type == 1)
 		mandelbrot(stuff);
@@ -41,28 +42,34 @@ int		zoom(int button, int x, int y, t_stuff *stuff)
 
 void	plus(t_stuff *stuff, int x, int y)
 {
+	stuff->tmp = stuff->frc.zoom;
 	stuff->frc.x1 += ((double)x - ((double)x / WIDTH * \
-	(WIDTH * stuff->frc.zoom))) / 10000;
+		(WIDTH * stuff->frc.zoom))) / 10000;
 	stuff->frc.x2 -= (((double)WIDTH - x) - ((double)WIDTH - x) / WIDTH * \
-	(WIDTH * stuff->frc.zoom)) / 10000;
+		(WIDTH * stuff->frc.zoom)) / 10000;
 	stuff->frc.y1 += ((double)y - ((double)y / LENGTH * \
-	(LENGTH * stuff->frc.zoom))) / 10000;
+		(LENGTH * stuff->frc.zoom))) / 10000;
 	stuff->frc.y2 -= (((double)LENGTH - y) - ((double)LENGTH - y) / \
-	LENGTH * (LENGTH * stuff->frc.zoom)) / 10000;
-	if (stuff->frc.zoom + 0.01385 <= 1)
-		stuff->frc.zoom += 0.01385;
+		LENGTH * (LENGTH * stuff->frc.zoom)) / 10000;
+	if (stuff->frc.zoom + 0.0138 <= 1)
+		stuff->frc.zoom += 0.0138;
 }
 
 void	minus(t_stuff *stuff, int x, int y)
 {
-	stuff->frc.x1 -= ((double)x - ((double)x / WIDTH * \
-	(WIDTH * stuff->frc.zoom))) / 10000;
-	stuff->frc.x2 += (((double)WIDTH - x) - ((double)WIDTH - x) / \
-	WIDTH * (WIDTH * stuff->frc.zoom)) / 10000;
-	stuff->frc.y1 -= ((double)y - ((double)y / LENGTH * \
-	(LENGTH * stuff->frc.zoom))) / 10000;
-	stuff->frc.y2 += (((double)LENGTH - y) - \
-	((double)LENGTH - y) / LENGTH * (LENGTH * stuff->frc.zoom)) / 10000;
-	if (stuff->frc.zoom - 0.0138 >= 0)
-		stuff->frc.zoom -= 0.0138;
+	if (stuff->frc.zoom > 0.1)
+	{
+		if (stuff->frc.zoom - 0.0138 >= 0.1)
+			stuff->frc.zoom -= 0.0138;
+		else
+			stuff->frc.zoom = 0.1;
+		stuff->frc.x1 -= ((double)x - ((double)x / WIDTH * \
+			(WIDTH * stuff->frc.zoom))) / 10000;
+		stuff->frc.x2 += (((double)WIDTH - x) - ((double)WIDTH - x) / \
+			WIDTH * (WIDTH * stuff->frc.zoom)) / 10000;
+		stuff->frc.y1 -= ((double)y - ((double)y / LENGTH * \
+			(LENGTH * stuff->frc.zoom))) / 10000;
+		stuff->frc.y2 += (((double)LENGTH - y) - \
+			((double)LENGTH - y) / LENGTH * (LENGTH * stuff->frc.zoom)) / 10000;
+	}
 }

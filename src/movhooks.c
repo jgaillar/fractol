@@ -47,27 +47,32 @@ void	hormovement(int keycode, t_stuff *stuff)
 {
 	if (keycode == 123)
 	{
-		stuff->frc.x1 -= 0.01 * stuff->frc.zoom;
-		stuff->frc.x2 -= 0.01 * stuff->frc.zoom;
+		stuff->frc.x1 -= (0.1 * stuff->frc.zoom) / 100;
+		stuff->frc.x2 -= (0.1 * stuff->frc.zoom) / 100;
 	}
 	if (keycode == 124)
 	{
-		stuff->frc.x1 += 0.01 * stuff->frc.zoom;
-		stuff->frc.x2 += 0.01 * stuff->frc.zoom;
+		stuff->frc.x1 += (0.1 * stuff->frc.zoom) / 100;
+		stuff->frc.x2 += (0.1 * stuff->frc.zoom) / 100;
 	}
+	printf("x1 :[%f]\n",stuff->frc.x1);
+	printf("x2 :[%f]\n",stuff->frc.x2);
+	printf("y1 :[%f]\n",stuff->frc.y1);
+	printf("y2 :[%f]\n",stuff->frc.y2);
+
 }
 
 void	vermovement(int keycode, t_stuff *stuff)
 {
 	if (keycode == 126)
 	{
-		stuff->frc.y1 -= 0.01 * stuff->frc.zoom;
-		stuff->frc.y2 -= 0.01 * stuff->frc.zoom;
+		stuff->frc.y1 -= (0.1 * stuff->frc.zoom) / 100;
+		stuff->frc.y2 -= (0.1 * stuff->frc.zoom) / 100;
 	}
 	if (keycode == 125)
 	{
-		stuff->frc.y1 += 0.01 * stuff->frc.zoom;
-		stuff->frc.y2 += 0.01 * stuff->frc.zoom;
+		stuff->frc.y1 += (0.1 * stuff->frc.zoom) / 100;
+		stuff->frc.y2 += (0.1 * stuff->frc.zoom) / 100;
 	}
 }
 

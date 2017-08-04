@@ -15,7 +15,7 @@
 # define FRACTOL_H
 # define WIDTH 800
 # define LENGTH 800
-# define it 150
+# define it 100
 # include <unistd.h>
 # include <stdlib.h>
 # include <mlx.h>
@@ -85,6 +85,7 @@ typedef	struct	s_stuff
 	unsigned long j;
 	int			exit;
 	int			type;
+	double		tmp;
 }				t_stuff;
 
 typedef	struct	s_tmp
