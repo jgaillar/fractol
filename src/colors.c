@@ -30,6 +30,11 @@ void		color1(t_img *img)
 	img->color[13] = 0x8a2be2;
 	img->color[14] = 0x9b30ff;
 	img->color[15] = 0x912cee;
+	color2(img);
+}
+
+void		color2(t_img *img)
+{
 	img->color[16] = 0x7d26cd;
 	img->color[17] = 0x551a8b;
 	img->color[18] = 0x9370DB;
@@ -45,6 +50,11 @@ void		color1(t_img *img)
 	img->color[28] = 0x7A67EE;
 	img->color[29] = 0x6959CD;
 	img->color[30] = 0x473C8B;
+	color3(img);
+}
+
+void		color3(t_img *img)
+{
 	img->color[31] = 0x0000FF;
 	img->color[32] = 0x0000EE;
 	img->color[33] = 0x0000CD;

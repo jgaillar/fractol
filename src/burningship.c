@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-void			burningship(t_stuff *stuff)
+void		burningship(t_stuff *stuff)
 {
 	t_tmp *tmp;
 
@@ -33,7 +33,7 @@ void			burningship(t_stuff *stuff)
 		stuff->img.img_ptr, 0, 0);
 }
 
-void			*draw_burningship(t_tmp *tmp)
+void		*draw_burningship(t_tmp *tmp)
 {
 	double	temp;
 	t_frac	frac;
@@ -46,20 +46,8 @@ void			*draw_burningship(t_tmp *tmp)
 		frac.y = -1;
 		while (++frac.y < LENGTH)
 		{
-			frac.c_r = (frac.x / WIDTH) * (frac.x2 - frac.x1) + frac.x1;
-			frac.c_i = (frac.y / LENGTH) * (frac.y2 - frac.y1) + frac.y1;
-			frac.z_r = 0;
-			frac.z_i = 0;
-			frac.i = -1;
-			while (frac.z_r * frac.z_r + frac.z_i * frac.z_i < 4 && \
-				++frac.i < stuff->frc.MAX_IT)
-			{
-				temp = frac.z_r;
-				frac.z_r = ((frac.z_r * frac.z_r) - (frac.z_i * frac.z_i)) \
-				+ frac.c_r;
-				frac.z_i = 2 * fabs(frac.z_i * temp) + frac.c_i;
-			}
-			if (frac.i == stuff->frc.MAX_IT)
+			burning(&frac, stuff, temp);
+			if (frac.i == stuff->frc.max_it)
 				mlx_pixel_put_to_image(stuff->img, frac.x, frac.y, 0x000000);
 			else
 				mlx_pixel_put_to_image(stuff->img, frac.x, frac.y, \
@@ -68,4 +56,21 @@ void			*draw_burningship(t_tmp *tmp)
 	}
 	free(tmp);
 	return (NULL);
+}
+
+void		burning(t_frac *frac, t_stuff *stuff, double temp)
+{
+	frac->c_r = (frac->x / WIDTH) * (frac->x2 - frac->x1) + frac->x1;
+	frac->c_i = (frac->y / LENGTH) * (frac->y2 - frac->y1) + frac->y1;
+	frac->z_r = 0;
+	frac->z_i = 0;
+	frac->i = -1;
+	while (frac->z_r * frac->z_r + frac->z_i * frac->z_i < 4 && \
+		++frac->i < stuff->frc.max_it)
+	{
+		temp = frac->z_r;
+		frac->z_r = ((frac->z_r * frac->z_r) - (frac->z_i * frac->z_i)) \
+		+ frac->c_r;
+		frac->z_i = 2 * fabs(frac->z_i * temp) + frac->c_i;
+	}
 }

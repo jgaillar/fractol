@@ -6,7 +6,7 @@
 #    By: jgaillar <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/26 20:10:24 by jgaillar          #+#    #+#              #
-#    Updated: 2017/06/09 00:25:46 by jgaillar         ###   ########.fr        #
+#    Updated: 2018/05/01 10:23:39 by jgaillar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@cd libft ; make re ; make clean ; cd ..
-	$(CC) $(CCFLAGS) $(FDFFLAGS) $(CPPFLAGS) libft/libft.a $^ -o $@
+	@cd mlx ; make re ; cd ..
+	$(CC) $(CCFLAGS) $(FDFFLAGS) $(CPPFLAGS) libft/libft.a mlx/libmlx.a $^ -o $@
 
 clean:
 	@cd src ; rm -rf $(OBJ_NAME) ; cd ..

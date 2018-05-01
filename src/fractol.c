@@ -23,8 +23,32 @@ void			ft_exit(int code)
 
 static void		ft_usage(void)
 {
-	ft_putendl("Usage: ./fractol <map>");
+	ft_putendl("Usage: ./fractol <mandelbrot /julia / burningship>");
 	ft_exit(0);
+}
+
+static void		check_type(char *s, t_stuff *stuff)
+{
+	if (ft_strcmp(s, "mandelbrot") == 0)
+	{
+		stuff->type = 1;
+		init_struct(stuff);
+		mandelbrot(stuff);
+	}
+	else if (ft_strcmp(s, "julia") == 0)
+	{
+		stuff->type = 2;
+		init_struct(stuff);
+		julia(stuff);
+	}
+	else if (ft_strcmp(s, "burningship") == 0)
+	{
+		stuff->type = 3;
+		init_struct(stuff);
+		burningship(stuff);
+	}
+	else
+		ft_usage();
 }
 
 int				main(int ac, char **av)
@@ -36,26 +60,8 @@ int				main(int ac, char **av)
 	stuff.img.mlx_ptr = mlx_init();
 	stuff.img.win_ptr = mlx_new_window(stuff.img.mlx_ptr, WIDTH, LENGTH,\
 			"FRACTOL");
-	if (av[1][0] == 49)
-	{
-		stuff.type = 1;
-		init_struct(&stuff);
-		mandelbrot(&stuff);
-	}
-	else if (av[1][0] == 50)
-	{
-		stuff.type = 2;
-		init_struct(&stuff);
-		julia(&stuff);
-	}
-	else if (av[1][0] == 51)
-	{
-		stuff.type = 3;
-		init_struct(&stuff);
-		burningship(&stuff);
-	}
-	else
-		ft_usage();
+	check_type(av[1], &stuff);
+	controlhelp();
 	mlx_hook(stuff.img.win_ptr, 2, (1L << 0), hooks, &stuff);
 	mlx_hook(stuff.img.win_ptr, 6, (1L << 6), mouse_hook, &stuff);
 	mlx_hook(stuff.img.win_ptr, 4, (1L << 2), zoom, &stuff);
